@@ -52,20 +52,13 @@ void async function () {
   await browser.close();
 }()
 
-const executablePath = require('chromium-all-codecs-bin')();
 void async function () {
-  const browser = await puppeteer.launch({ headless: process.env.CI, executablePath });
+  const browser = await puppeteer.launch({ headless: process.env.CI });
   const [page] = await browser.pages();
-  await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.mp4'));
-  try {
-    await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
-  }
-  catch (error) {
-    console.log(await page.evaluate(() => document.getElementsByTagName('video')[0].readyState));
-    await page.screenshot({ path: path.join(__dirname, 'failed-video-screenshot.png') });
-    await browser.close();
-    return;
-  }
+
+  // Load the VP9 file converted using FFMPEG in the GitHub Actions workflow file
+  await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.vp9.webm'));
+  await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
 
   await page.evaluate(() => {
     /** @type {HTMLVideoElement} */
@@ -86,6 +79,6 @@ void async function () {
   await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
 
   const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
-  await page.screenshot({ path: path.join(__dirname, 'mp4-video-screenshot.png'), clip });
+  await page.screenshot({ path: path.join(__dirname, 'mp4-vp9-video-screenshot.png'), clip });
   await browser.close();
 }()

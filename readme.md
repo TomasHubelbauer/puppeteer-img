@@ -11,8 +11,10 @@ Chromium. MP4 is not. There is a Chromium build which bundles codecs necessary
 for MP4 support here: https://chromium.woolyss.com/
 
 An NPM package is available which instruments Puppeteer with this version of
-Chromium: `talmobi/chromium-all-codecs-bin`. With it, Puppeteer can be used to
-generate posters even for MP4 videos.
+Chromium: `talmobi/chromium-all-codecs-bin`. With it, Puppeteer should be usable
+at rendering the video, however it still does not work. I tried adding
+`chromium-codecs-ffmpeg` and `chromium-codecs-ffmpeg-extra`, but that did not
+work either.
 
 This won't work for navigating to a PDF, Chromium doesn't bundle PDF viewing
 support, it is a native component in Chrome (unlike say Firefox with PDF.js).
