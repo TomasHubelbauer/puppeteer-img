@@ -1,6 +1,10 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 
+// Crash on error
+process.on('uncaughtException', error => { throw error; });
+process.on('unhandledRejection', error => { throw error; });
+
 void async function () {
   const browser = await puppeteer.launch({ headless: false });
   const [page] = await browser.pages();

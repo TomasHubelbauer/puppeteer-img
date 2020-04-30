@@ -18,6 +18,8 @@ jobs:
         git config --global user.name "Tomas Hubelbauer"
         # Check out the `master` branch because by default GitHub Actions checks out detached HEAD
         git checkout master
+        # Install Chromium dependencies needed on Ubuntu
+        sudo apt install libgbm1 -y
         # Capture the screenshots
         npm install
         node .
