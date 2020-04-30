@@ -57,7 +57,12 @@ void async function () {
   const browser = await puppeteer.launch({ headless: process.env.CI, executablePath });
   const [page] = await browser.pages();
   await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.mp4'));
-  await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
+  try {
+    await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
+  }
+  catch (error) {
+    console.log(await page.evaluate(() => document.getElementsByTagName('video')[0].readyState));
+  }
 
   await page.evaluate(() => {
     /** @type {HTMLVideoElement} */
