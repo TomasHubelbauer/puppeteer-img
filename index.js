@@ -24,7 +24,7 @@ void async function () {
 }()
 
 void async function () {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: process.env.CI });
   const [page] = await browser.pages();
   await page.goto('file://' + path.join(__dirname, 'HERO_-_Blender_Open_Movie-full_movie.webm.360p.vp9.webm'));
   await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
