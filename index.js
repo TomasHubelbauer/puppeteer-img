@@ -6,7 +6,7 @@ process.on('uncaughtException', error => { throw error; });
 process.on('unhandledRejection', error => { throw error; });
 
 void async function () {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: process.env.CI });
   const [page] = await browser.pages();
   await page.goto('file://' + path.join(__dirname, 'PM5544_with_non-PAL_signals.png'));
   await page.waitForFunction(() => document.images[0].complete);
