@@ -19,6 +19,7 @@ jobs:
         # Check out the `master` branch because by default GitHub Actions checks out detached HEAD
         git checkout master
         # Install Chromium dependencies needed on Ubuntu and FFMPEG for MP4 to VP9 conversion
+        sudo apt update
         sudo apt install libgbm1 ffmpeg -y
         # Install ffmpeg to convert MP4 to VP9
         ffmpeg -i Big_Buck_Bunny_360_10s_10MB.mp4 -c:v libvpx-vp9 -c:a libopus Big_Buck_Bunny_360_10s_10MB.vp9.webm
