@@ -16,6 +16,8 @@ at rendering the video, however it still does not work. I tried adding
 `chromium-codecs-ffmpeg` and `chromium-codecs-ffmpeg-extra`, but that did not
 work either.
 
+I used Playwright and it was able to shoot the MP4 video, no problem.
+
 This won't work for navigating to a PDF, Chromium doesn't bundle PDF viewing
 support, it is a native component in Chrome (unlike say Firefox with PDF.js).
 It does of course support rendering to a PDF.

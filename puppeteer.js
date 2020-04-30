@@ -19,7 +19,7 @@ void async function () {
   });
 
   const clip = await page.evaluate(() => document.images[0].getBoundingClientRect().toJSON());
-  await page.screenshot({ path: path.join(__dirname, 'img-screenshot.png'), clip });
+  await page.screenshot({ path: path.join(__dirname, 'puppeteer-img-screenshot.png'), clip });
   await browser.close();
 }()
 
@@ -48,37 +48,37 @@ void async function () {
   await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
 
   const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
-  await page.screenshot({ path: path.join(__dirname, 'vp9-video-screenshot.png'), clip });
+  await page.screenshot({ path: path.join(__dirname, 'puppeteer-vp9-video-screenshot.png'), clip });
   await browser.close();
 }()
 
-void async function () {
-  const browser = await puppeteer.launch({ headless: process.env.CI });
-  const [page] = await browser.pages();
+// void async function () {
+//   const browser = await puppeteer.launch({ headless: process.env.CI });
+//   const [page] = await browser.pages();
 
-  // Load the VP9 file converted using FFMPEG in the GitHub Actions workflow file
-  await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.vp9.webm'));
-  await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
+//   // Load the VP9 file converted using FFMPEG in the GitHub Actions workflow file
+//   await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.vp9.webm'));
+//   await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
 
-  await page.evaluate(() => {
-    /** @type {HTMLVideoElement} */
-    const videoVideo = document.getElementsByTagName('video')[0];
+//   await page.evaluate(() => {
+//     /** @type {HTMLVideoElement} */
+//     const videoVideo = document.getElementsByTagName('video')[0];
 
-    // Hide video controls so that they don't appear in the screenshot
-    videoVideo.controls = false;
+//     // Hide video controls so that they don't appear in the screenshot
+//     videoVideo.controls = false;
 
-    // Scale down to a poster size
-    videoVideo.style.maxWidth = 200;
-    videoVideo.style.maxHeight = 200;
+//     // Scale down to a poster size
+//     videoVideo.style.maxWidth = 200;
+//     videoVideo.style.maxHeight = 200;
 
-    // Seek to 10 % to skip likely blank frames at the start
-    videoVideo.currentTime = videoVideo.duration * .1;
-  });
+//     // Seek to 10 % to skip likely blank frames at the start
+//     videoVideo.currentTime = videoVideo.duration * .1;
+//   });
 
-  // Wait for the video to stop seeking before capturing the screenshot
-  await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
+//   // Wait for the video to stop seeking before capturing the screenshot
+//   await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
 
-  const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
-  await page.screenshot({ path: path.join(__dirname, 'mp4-vp9-video-screenshot.png'), clip });
-  await browser.close();
-}()
+//   const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
+//   await page.screenshot({ path: path.join(__dirname, 'mp4-vp9-video-screenshot.png'), clip });
+//   await browser.close();
+// }()
