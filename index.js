@@ -48,6 +48,36 @@ void async function () {
   await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
 
   const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
-  await page.screenshot({ path: path.join(__dirname, 'video-screenshot.png'), clip });
+  await page.screenshot({ path: path.join(__dirname, 'vp9-video-screenshot.png'), clip });
+  await browser.close();
+}()
+
+const executablePath = require('chromium-all-codecs-bin')();
+void async function () {
+  const browser = await puppeteer.launch({ headless: process.env.CI, executablePath });
+  const [page] = await browser.pages();
+  await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.mp4'));
+  await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
+
+  await page.evaluate(() => {
+    /** @type {HTMLVideoElement} */
+    const videoVideo = document.getElementsByTagName('video')[0];
+
+    // Hide video controls so that they don't appear in the screenshot
+    videoVideo.controls = false;
+
+    // Scale down to a poster size
+    videoVideo.style.maxWidth = 200;
+    videoVideo.style.maxHeight = 200;
+
+    // Seek to 10 % to skip likely blank frames at the start
+    videoVideo.currentTime = videoVideo.duration * .1;
+  });
+
+  // Wait for the video to stop seeking before capturing the screenshot
+  await page.waitForFunction(() => !document.getElementsByTagName('video')[0].seeking);
+
+  const clip = await page.evaluate(() => document.getElementsByTagName('video')[0].getBoundingClientRect().toJSON());
+  await page.screenshot({ path: path.join(__dirname, 'mp4-video-screenshot.png'), clip });
   await browser.close();
 }()

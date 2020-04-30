@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chromium-all-codecs-bin": "github:talmobi/chromium-all-codecs-bin",
     "puppeteer": "^3.0.2"
   }
 }
