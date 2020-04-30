@@ -20,7 +20,7 @@ jobs:
         git checkout master
         # Install Chromium dependencies needed on Ubuntu
         sudo apt update
-        sudo apt install libgbm1 -y chromium-codecs-ffmpeg-nonfree
+        sudo apt install libgbm1 -y chromium-codecs-ffmpeg-extra
         # Capture the screenshots
         npm install
         node .
