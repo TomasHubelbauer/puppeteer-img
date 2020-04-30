@@ -54,7 +54,7 @@ void async function () {
 
 const executablePath = require('chromium-all-codecs-bin')();
 void async function () {
-  const browser = await puppeteer.launch({ headless: process.env.CI, executablePath });
+  const browser = await puppeteer.launch({ headless: process.env.CI });
   const [page] = await browser.pages();
   await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.mp4'));
   try {
