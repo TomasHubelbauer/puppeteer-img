@@ -62,6 +62,9 @@ void async function () {
   }
   catch (error) {
     console.log(await page.evaluate(() => document.getElementsByTagName('video')[0].readyState));
+    await page.screenshot({ path: path.join(__dirname, 'failed-video-screenshot.png') });
+    await browser.close();
+    return;
   }
 
   await page.evaluate(() => {
