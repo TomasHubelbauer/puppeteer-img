@@ -58,8 +58,6 @@ void async function () {
   const browser = await playwright['firefox'].launch({ headless: process.env.CI });
   const context = await browser.newContext();
   const page = await context.newPage();
-
-  // Load the VP9 file converted using FFMPEG in the GitHub Actions workflow file
   await page.goto('file://' + path.join(__dirname, 'Big_Buck_Bunny_360_10s_10MB.mp4'));
   await page.waitForFunction(() => document.getElementsByTagName('video')[0].readyState === 4);
 
