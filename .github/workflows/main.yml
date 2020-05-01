@@ -18,9 +18,9 @@ jobs:
         git config --global user.name "Tomas Hubelbauer"
         # Check out the `master` branch because by default GitHub Actions checks out detached HEAD
         git checkout master
-        # Install Chromium dependencies needed on Ubuntu
+        # Install Chromium and Firefox dependencies needed on Ubuntu
         sudo apt update
-        sudo apt install libgbm1 -y
+        sudo apt install libgbm1 ubuntu-restricted-extras -y
         # Capture the screenshots
         npm install
         time node puppeteer.js
